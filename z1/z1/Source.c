@@ -84,7 +84,7 @@ int countStudentsFromFile(char* filename)
 	return count;
 }
 
-int studentData(char* filename, student* osoba, int count)
+int studentData(char* filename, student* person, int count)
 {
 	FILE* fp = NULL;
 	char buffer[MAX_LINE] = { 0 };
