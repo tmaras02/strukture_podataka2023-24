@@ -87,7 +87,6 @@ int countStudentsFromFile(char* filename)
 int studentData(char* filename, student* person, int count)
 {
 	FILE* fp = NULL;
-	char buffer[MAX_LINE] = { 0 };
 	int i = 0;
 
 	fp = fopen(filename, "r");
