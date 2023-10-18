@@ -1,8 +1,8 @@
-/* 1. Napisati program koji prvo proËita koliko redaka ima datoteka, tj. koliko ima studenata
-zapisanih u datoteci. Nakon toga potrebno je dinamiËki alocirati prostor za niz struktura
-studenata (ime, prezime, bodovi) i uËitati iz datoteke sve zapise. Na ekran ispisati ime,
+/* 1. Napisati program koji prvo pro√®ita koliko redaka ima datoteka, tj. koliko ima studenata
+zapisanih u datoteci. Nakon toga potrebno je dinami√®ki alocirati prostor za niz struktura
+studenata (ime, prezime, bodovi) i u√®itati iz datoteke sve zapise. Na ekran ispisati ime,
 prezime, apsolutni i relativni broj bodova.
-Napomena: Svaki redak datoteke sadrûi ime i prezime studenta, te broj bodova na kolokviju.
+Napomena: Svaki redak datoteke sadr≈æi ime i prezime studenta, te broj bodova na kolokviju.
 relatvan_br_bodova = br_bodova/max_br_bodova*100 */
 
 
@@ -100,14 +100,14 @@ int studentData(char* filename, student* osoba, int count)
 
 	while (!feof(fp))
 	{ // while not found end of file (EOF)
-		fscanf(fp, " %s %s %d", osoba[i].name, osoba[i].surname, &osoba[i].points);
-		osoba[i].relative_points = ((((float)osoba[i].points) / MAX_BOD) * 100);
+		fscanf(fp, " %s %s %d", person[i].name, person[i].surname, &person[i].points);
+		person[i].relative_points = ((((float)osoba[i].points) / MAX_BOD) * 100);
 		i++;
 	}
 
 	for (int j = 0; j < count; j++)
 	{
-		printf("\n%s %s %d %d\n", osoba[j].name, osoba[j].surname, osoba[j].points, osoba[j].relative_points);
+		printf("\n%s %s %d %d\n", person[j].name, person[j].surname, person[j].points, person[j].relative_points);
 	}
 
 	fclose(fp);
