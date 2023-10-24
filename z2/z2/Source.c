@@ -1,3 +1,12 @@
+/* 2. Definirati strukturu osoba (ime, prezime, godina rođenja) i napisati program koji:
+A. dinamički dodaje novi element na početak liste,
+B. ispisuje listu,
+C. dinamički dodaje novi element na kraj liste,
+D. pronalazi element u listi (po prezimenu),
+E. briše određeni element iz liste,
+U zadatku se ne smiju koristiti globalne varijable. */
+
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
@@ -25,6 +34,8 @@ int Print(Position p);
 int searchPerSurname(Position p);
 int Delete(Position p);
 int menu();
+int printPerson();
+char* searchedSurname();
 
 int main()
 {
@@ -49,12 +60,13 @@ Position createPerson() // Creates new element (person) that can be added to lis
 		return NULL;
 	}
 
-	printf("Enter name:\n");
+	printf("Enter name: ");
 	scanf(" %s", newPerson->name);
-	printf("Enter surname:\n");
+	printf("\nEnter surname: ");
 	scanf(" %s", newPerson->surname);
-	printf("Enter birth year:\n");
+	printf("\nEnter birth year: ");
 	scanf(" %d", &newPerson->birthYear);
+	printf("\n");
 
 	return newPerson;
 }
@@ -91,6 +103,7 @@ int addBehind(Position head) // Add element at the end of the list
 
 	if (newPerson)
 	{
+		head = findLast(head);
 		newPerson->next = head->next;
 		head->next = newPerson;
 	}
@@ -102,18 +115,18 @@ int Print(Position head) // Prints list
 {
 	while (head != NULL)
 	{
-		printf("\n%s %s %d \n\n", head->name, head->surname, head->birthYear);
+		printf(" %s %s %d \n\n", head->name, head->surname, head->birthYear);
 		head = head->next;
 	}
 
 	return 0;
 }
 
-int searchPerSurname(Position p) // Findes person based on surname and prints memory adress of that person
+int searchPerSurname(Position p) // Findes person based on surname
 {
 	char sur[MAX_LENGTH];
 
-	printf("\nEnter surname of person you want to find: ");
+	printf("Enter surname of person you want to find: ");
 	scanf("%s", &sur);
 
 	while (p != NULL && strcmp(sur, p->surname) != 0)
@@ -123,33 +136,48 @@ int searchPerSurname(Position p) // Findes person based on surname and prints me
 	if (p == NULL)
 		printf("\nPerson wtih surname you entered does not exist!\n\n");
 	else
-		printf("\nMemory adress of searched person is: %p\n\n", p);
+		printPerson(p);
 
 	return EXIT_SUCCESS;
 }
 
-int Delete(Position p) // Deletes person based on surname
+int Delete(Position p) // Deletes a person based on surname
 {
-	Position pret = NULL;
-	char prez[MAX_LENGTH];
+	Position prev = NULL;
+	char sur[MAX_LENGTH];
 
-	printf("\nEnter surname of person you want to delete: ");
-	scanf("%s", &prez);
+	printf("Enter the surname of the person you want to delete: ");
+	scanf("%s", sur);
 	printf("\n");
 
-	while (p->next != NULL && strcmp(prez, p->surname) != 0)
+	while (p != NULL && strcmp(sur, p->surname) != 0)
 	{
-		pret = p;
+		prev = p;
 		p = p->next;
 	}
 
-	if (pret != NULL && strcmp(prez, p->surname) == 0)
+	if (p != NULL && strcmp(sur, p->surname) == 0)
 	{
-		p = pret->next;
-		pret->next = p->next;
+		if (prev != NULL)
+		{
+			prev->next = p->next;
+			free(p);
+		}
+		else
+		{
+			// If the first element is the one to be deleted, update the Head pointer
+			Position temp = p->next;
+			free(p);
+			printf("Deleted!\n\n");
+			return temp;
+		}
+	}
+	else
+	{
+		printf("Person with the entered surname does not exist!\n\n");
 	}
 
-	return EXIT_SUCCESS;
+	return p;
 }
 
 int menu(Position Head)
@@ -160,6 +188,7 @@ int menu(Position Head)
 		printf("Enter: F -> Add in front, P -> Print, B -> Add behind, S -> Search per surname, D -> Delete, X -> Exit\n\n");
 		printf("Unos: ");
 		scanf(" %c", &choice);
+		printf("\n");
 
 		if (choice == 'F' || choice == 'f')
 			addFront(Head);
@@ -170,12 +199,31 @@ int menu(Position Head)
 		else if (choice == 'S' || choice == 's')
 			searchPerSurname(Head->next);
 		else if (choice == 'D' || choice == 'd')
-			Delete(&Head);
+		{
+			Head->next = Delete(Head->next);
+		}
 		else if (choice == 'X' || choice == 'x')
 			break;
 		else
-			printf("\nEntry error, please try again!\n\n");
+			printf("Entry error, please try again!\n\n");
 	}
 
 	return EXIT_SUCCESS;
+}
+
+int printPerson(Position person)
+{
+	printf("\nName: %s, surname: %s, birth year: %d, adress: %p\n\n",
+		person->name, person->surname, person->birthYear, person);
+
+	return EXIT_SUCCESS;
+}
+
+char* searchedSurname()
+{
+	char surname[MAX_LENGTH] = { 0 };
+	printf("Enter surname of the wanted person:\n");
+	scanf(" %s", surname);
+
+	return surname;
 }
