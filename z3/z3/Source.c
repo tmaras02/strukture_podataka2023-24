@@ -1,9 +1,9 @@
 /* 3. Prethodnom zadatku dodati funkcije:
-A. dinamièki dodaje novi element iza odreðenog elementa,
-B. dinamièki dodaje novi element ispred odreðenog elementa,
+A. dinamiÄki dodaje novi element iza odreÄ‘enog elementa,
+B. dinamiÄki dodaje novi element ispred odreÄ‘enog elementa,
 C. sortira listu po prezimenima osoba,
 D. upisuje listu u datoteku,
-E. èita listu iz datoteke. */
+E. Äita listu iz datoteke. */
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -37,6 +37,7 @@ int addInFront();
 int printPerson();
 int write();
 int read();
+int deleteAll();
 int menu();
 
 
@@ -45,7 +46,8 @@ int main()
 	person Head = { .next = NULL, .name = {0}, .surname = {0}, .birthYear = 0 };
 
 	menu(&Head);
-
+	
+	deleteAll(&Head);
 	return EXIT_SUCCESS;
 }
 
@@ -317,6 +319,16 @@ int printPerson(position person)
 		person->name, person->surname, person->birthYear, person);
 
 	return EXIT_SUCCESS;
+}
+
+int deleteAll(position p) {
+	position q = NULL;
+	while (p->next != 0) {
+		q = p->next;
+		p->next = q->next;
+		free(q);
+	}
+	return 0;
 }
 
 int menu(position Head)
