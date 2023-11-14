@@ -20,7 +20,6 @@ float fileinput();
 int printPostfix();
 int pop();
 int push();
-int check();
 int Delete();
 position top = NULL;
 
@@ -112,9 +111,6 @@ float fileinput(char filename[MAX_LINE]) {
 		strcpy(line, p);
 	}
 	pop(tmp1);
-	if (check() == 0) {
-		return ERROR;
-	}
 
 	return *tmp1;
 }
@@ -162,20 +158,6 @@ int pop(float* temp) {
 	top = top->next;
 	free(q);
 	return 0;
-}
-
-int check() {
-	int i = 0;
-	while (top != NULL) {
-		top = top->next;
-		i++;
-	}
-	if (i == 0) {
-		return 1;
-	}
-	else {
-		return 0;
-	}
 }
 
 int Delete() {
