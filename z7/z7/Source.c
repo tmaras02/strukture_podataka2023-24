@@ -7,7 +7,6 @@ korištenje DOS naredbi: 1- "md", 2 - "cd dir", 3 - "cd..", 4 - "dir" i 5 – iz
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#define EXIT -1
 #define MAX_LINE 1024
 #define ERROR -1
 
