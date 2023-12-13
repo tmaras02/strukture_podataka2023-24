@@ -1,3 +1,8 @@
+/* 7. Napisati program koji pomoću vezanih listi (stabala) predstavlja strukturu direktorija.
+Omogućiti unos novih direktorija i pod-direktorija, ispis sadržaja direktorija i
+povratak u prethodni direktorij. Točnije program treba preko menija simulirati
+korištenje DOS naredbi: 1- "md", 2 - "cd dir", 3 - "cd..", 4 - "dir" i 5 – izlaz.*/
+
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
@@ -50,7 +55,8 @@ int main() {
 	char foldername[MAX_LINE];
 
 	while (1) {
-		printf("Upisite naredbu: ");
+		printf("Command list: \n md - make directory \n dir - print elements of directory \n cd - change directory \n cd.. - go back to previous directory \n exit \n\n");
+		printf("Enter command: ");
 		scanf("%s", command);
 		if (strcmp(command, "md") == 0) {
 			current->child = makedirectory(current);
@@ -60,16 +66,16 @@ int main() {
 			print(current->child);
 		}
 		else if (strcmp(command, "cd") == 0) {
-			printf("\nUnesite ime direktorija: ");
+			printf("\nEnter directory name: ");
 			scanf("%s", foldername);
 			temp = find(current, foldername);
 			if (temp == NULL)
-				printf("\nNepostoji element s takvim imenom! (%s)\n", foldername);
+				printf("\nNo directory with that name! (%s)\n", foldername);
 			else {
 				push(sroot, temp);
 			}
 			current = temp;
-			printf("Elementi direktorija (%s):\n", foldername);
+			printf("Elements of directory (%s):\n", foldername);
 			print(current->child);
 		}
 		else if (strcmp(command, "cd..") == 0) {
@@ -82,7 +88,7 @@ int main() {
 			break;
 		}
 		else {
-			printf("\nPogresan unos! Pokusajte ponovo!\n\n");
+			printf("\nIncorrect entry! Please try again!\n\n");
 		}
 	}
 	return 0;
@@ -106,13 +112,13 @@ position makedirectory(position p) {
 		printf("Can't allocate memory");
 		return ERROR;
 	}
-	printf("\nUpisite naziv direktorija kojeg biste stvorili: ");
+	printf("\nEnter name for directory you want to create: ");
 	scanf("%s", q->name);
 	q->child = NULL;
 	q->sibling = NULL;
 	q->sibling = p->child;
 	p->child = q;
-	printf("\nUspjesno napravljen direktorij!\n\n");
+	printf("\nDirecory creation successful!\n\n");
 	return q;
 }
 
@@ -170,7 +176,7 @@ position find(position current, char* name)
 	position child = current->child;
 
 	if (current == NULL)
-		printf("\nDirektorij je prazan\n");
+		printf("\nDirectory is empty!\n");
 
 	while (child != NULL && strcmp(child->name, name) != 0)
 		child = child->sibling;
@@ -204,7 +210,7 @@ int deleteStack(pos head)
 
 	free(temp);
 
-	printf("\nStog uspjesno obrisan!\n");
+	printf("\nStack deletion successful!\n");
 
 	return 1;
 }
