@@ -1,6 +1,6 @@
-/*8. Napisati program koji omoguæava rad s binarnim stablom pretraživanja. Treba
-omoguæiti unošenje novog elementa u stablo, ispis elemenata (inorder, preorder, postorder i
-level order), brisanje i pronalaženje nekog elementa.*/
+/*8. Napisati program koji omoguÃ¦ava rad s binarnim stablom pretraÅ¾ivanja. Treba
+omoguÃ¦iti unoÅ¡enje novog elementa u stablo, ispis elemenata (inorder, preorder, postorder i
+level order), brisanje i pronalaÅ¾enje nekog elementa.*/
 
 //1. dio
 
@@ -89,7 +89,6 @@ position createNode(int Value) {
 	newNode = (position)malloc(sizeof(node));
 	if (newNode == NULL) {
 		printf("Allocation failed!");
-		exit(-1);
 	}
 	newNode->value = Value;
 	newNode->right = NULL;
